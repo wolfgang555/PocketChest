@@ -1,7 +1,15 @@
 /**
- * IMPORTANT SECURITY WARNING:
- * Before pushing to remote, run the following command to avoid committing the wrangler.jsonc file.
- * git update-index --assume-unchanged pocket-chest-backend/wrangler.jsonc
+ * PocketChest Backend Configuration Template
+ *
+ * SETUP INSTRUCTIONS:
+ * 1. Copy this file: cp wrangler.jsonc.template wrangler.jsonc
+ * 2. Replace <your-database-id> with your actual D1 database ID
+ * 3. Update bucket_name if you used a different name
+ * 4. Configure custom domain routes if needed
+ * 5. The wrangler.jsonc file will be ignored by git for security
+ *
+ * For more details on configuration, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
@@ -15,26 +23,26 @@
 		{
 			"binding": "DB",
 			"database_name": "pocket-chest",
-			"database_id": "<your-database-id>",
-		},
+			"database_id": "1e3168fe-7b76-4747-993c-3453c0c1c9c6"
+		  }
 	],
 	"r2_buckets": [
 		{
 			"bucket_name": "pocket-chest",
-			"binding": "R2_STORAGE",
-		},
+			"binding": "pocket_chest"
+		  }
 	],
 	"vars": {
 		"REQUIRE_TOTP": "true",
 	},
 	// Uncomment and configure for custom domain:
-	// "routes": [
-	// 	{
-	// 		"pattern": "api.yourdomain.com",
-	// 		"custom_domain": true
-	// 	}
-	// ],
-	"workers_dev": true,
+	"routes": [
+		{
+			"pattern": "sync.314027.xyz",
+			"custom_domain": true
+		}
+	],
+	"workers_dev": false,
 	"triggers": {
 		"crons": ["0 * * * *"],
 	},
