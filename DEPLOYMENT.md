@@ -60,14 +60,14 @@ Save the database ID from the output. Update `pocket-chest-backend/wrangler.json
 wrangler r2 bucket create pocket-chest
 ```
 
-Update `pocket-chest-backend/wrangler.jsonc` with the bucket binding:
+If you used a different bucket name, update the bucket name in `pocket-chest-backend/wrangler.jsonc`. Otherwise, no configuration changes are needed.
 
 ```jsonc
 {
   "r2_buckets": [
     {
-      "bucket_name": "pocket-chest",
-      "binding": "R2_STORAGE"
+      "bucket_name": "pocket-chest", // The name you used in the `wrangler r2 bucket create` command
+      "binding": "R2_STORAGE" // Just use `R2_STORAGE` regardless of bucket_name
     }
   ]
 }
@@ -101,8 +101,8 @@ If you have a domain managed by Cloudflare, you can configure a custom domain ro
 **Workers.dev Domain Control:**
 - By default, your Worker will be accessible at both your custom domain AND `your-worker-name.your-subdomain.workers.dev`
 - To disable the default workers.dev domain, set `"workers_dev": false` in your `wrangler.jsonc`
-- When `workers_dev` is false, your Worker will ONLY be accessible via your custom domain routes
-- This is recommended for production deployments where you want to use only your custom domain
+- When `workers_dev` is false, your Worker will ONLY be accessible via your custom domain routes. This is recommended for production deployments where you want to use only your custom domain
+- **⚠️ China Access**: The default `*.workers.dev` domain is not accessible from China. If you need China accessibility, you must use a custom domain
 
 **Requirements:**
 - Your domain must be added to Cloudflare (as a zone)
